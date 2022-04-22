@@ -6,6 +6,6 @@ import userSchema from "../schemas/userSchema.js";
 const userRouter = Router()
 
 userRouter.post("/sign-up", validationSchemaMiddleware(userSchema), userController.create)
-userRouter.post("/login")
+userRouter.post("/login", validationSchemaMiddleware(userSchema), userController.login)
 
 export default userRouter

@@ -7,3 +7,11 @@ export async function create(req: Request, res: Response){
 
 	res.sendStatus(201)
 }
+
+export async function login(req: Request, res: Response) {
+	const createSessionData = req.body
+
+	const token = await userService.login(createSessionData)
+
+	res.status(200).send(token)
+}

@@ -62,5 +62,13 @@ model user {
   id       Int    @id @default(autoincrement())
   email    String @unique
   password String
+		sessions session[]
   @@map("users")
+}
+
+model session {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  users  user @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  @@map("sessions")
 }

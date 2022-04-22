@@ -1,9 +1,11 @@
-import { user } from '@prisma/client'
+import { session, user } from '@prisma/client'
 import * as userRepository from '../repositories/userRepository.js'
 import * as errors from '../utils/errors.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export type createUserData = Omit<user, "id">
+export type createSessionData = Omit<session, "id">
 
 export async function create(createUserData: createUserData) {
 	const { email, password } = createUserData
@@ -15,5 +17,24 @@ export async function create(createUserData: createUserData) {
 
 	const hashedPassword = bcrypt.hashSync(password, 10)
 
-	await userRepository.insert({ ...createUserData, password: hashedPassword })
+	await userRepository.insertUser({ ...createUserData, password: hashedPassword })
+}
+
+export async function login(createSessionData: createUserData) {
+	const { email, password } = createSessionData
+
+	const user = await userRepository.findEmail(email)
+
+	if(!user){
+		throw errors.unauthorized('Incorrect email or password')
+	}
+
+	if(!bcrypt.compareSync(password, user.password)){
+		throw errors.unauthorized('Incorrect email or password')
+	}
+	const session = await userRepository.insertSession({userId: user.id})
+	const secretKey = process.env.JWT_SECRET
+	const token = jwt.sign(session.id.toString(), secretKey)
+
+	return token
 }
