@@ -17,7 +17,7 @@ export async function insertUser(user: interfaces.createUserData) {
 }
 
 export async function findUserId(id: number) {
-	const user = await prisma.user.findUnique({
+	const user = await prisma.user.findFirst({
 		where: {
 			id
 		}

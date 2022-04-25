@@ -20,6 +20,7 @@ model discipline {
   termId              Int
   terms               term                 @relation(fields: [termId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   teachersDisciplines teacherDiscipline[]
+		tests test[]
   @@map("disciplines")
 }
 
@@ -55,6 +56,8 @@ model test {
   teacherDisciplineId Int
   categories          category          @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   teachersDisciplines teacherDiscipline @relation(fields: [teacherDisciplineId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+		disciplines  discipline @relation(fields: [disciplineId], references: [id])
+  disciplineId Int
   @@map("tests")
 }
 
