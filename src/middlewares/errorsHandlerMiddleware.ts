@@ -20,5 +20,5 @@ export function errorsHandlerMiddleware(err: Error | TypeError, req: Request, re
 			return res.status(err.code).send(err.message)
 		}
 	}
-	res.sendStatus(500)
+	res.send(err).status(500)
 }
