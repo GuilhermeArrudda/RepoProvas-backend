@@ -3,6 +3,8 @@ import { TypeError } from "../utils/errors.js";
 
 export function errorsHandlerMiddleware(err: Error | TypeError, req: Request, res: Response, next: NextFunction) {
 
+	console.log(err)
+
 	if('type' in err) {
 		if(err.type === 'unauthorized'){
 			return res.status(err.code).send(err.message)
