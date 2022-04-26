@@ -33,11 +33,8 @@ export async function login(createSessionData: createUserData) {
 		throw errors.unauthorized('Incorrect email or password')
 	}
 	const session = await userRepository.insertSession({userId: user.id})
-	console.log(session)
 	const secretKey = process.env.JWT_SECRET
-	console.log(secretKey)
 	const token = jwt.sign(session.id.toString(), secretKey)
-	console.log(token)
 
 	return token
 }

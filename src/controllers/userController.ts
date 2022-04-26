@@ -10,9 +10,7 @@ export async function create(req: Request, res: Response){
 
 export async function login(req: Request, res: Response) {
 	const createSessionData = req.body
-	//console.log(createSessionData)
 
 	const token = await userService.login(createSessionData)
-	//console.log(token)
 	res.status(200).send(token)
 }
