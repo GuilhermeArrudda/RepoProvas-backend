@@ -11,5 +11,6 @@ contentRouter.get("/content/disciplines", contentController.listDisciplines)
 contentRouter.get("/content/discipline/:name", validateToken, contentController.listDisciplinesByName)
 contentRouter.get("/content/categories", validateToken, contentController.listCategories)
 contentRouter.get("/content/disciplines/:id", validateToken, contentController.listDisciplinesById)
+contentRouter.patch("/content/views/:id", validateToken, contentController.updateViews)
 
 export default contentRouter;

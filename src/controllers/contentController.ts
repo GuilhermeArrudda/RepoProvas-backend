@@ -18,10 +18,8 @@ export async function listDisciplines(req: Request, res: Response) {
 
 export async function listDisciplinesByName(req: Request, res: Response) {
 	const { name } = req.params;
-	console.log(name)
 	
 	const content = await contentServices.disciplinesByName(name);
-	console.log(content)
 	res.status(200).send(content);
 }
 
@@ -35,4 +33,10 @@ export async function listDisciplinesById(req: Request, res: Response) {
 	const content = await contentServices.disciplinesById(parseInt(id));
 
 	res.status(200).send(content);
+}
+
+export async function updateViews(req: Request, res: Response) {
+	const { id } = req.params;
+	await contentServices.updateViews(parseInt(id))
+	res.sendStatus(200)
 }

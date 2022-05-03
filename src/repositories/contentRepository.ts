@@ -28,6 +28,8 @@ export async function getCategories(instructorId: number) {
 				select: {
 					id: true,
 					name: true,
+					pdfUrl: true,
+					views: true,
 					teachersDisciplines: {
 						select: {
 							disciplines: {
@@ -109,4 +111,13 @@ export async function getCategoriesList() {
 			name: true,
 		},
 	});
+}
+
+export async function updateViews(id: number) {
+	return await prisma.test.update({
+		where: {
+			id
+		},
+		data: { views: { increment: 1 } }
+	})
 }

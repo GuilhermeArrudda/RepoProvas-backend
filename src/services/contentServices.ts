@@ -47,3 +47,7 @@ export async function disciplinesById(id: number) {
 
 	return discipline;
 }
+
+export async function updateViews(id: number) {
+	return await contentRepository.updateViews(id)
+}
