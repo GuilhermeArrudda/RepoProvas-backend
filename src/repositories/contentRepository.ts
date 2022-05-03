@@ -5,6 +5,11 @@ export async function getInstructor() {
 		select: {
 			id: true,
 			name: true,
+			teachersDisciplines: {
+				select: {
+					disciplines: true
+				}
+			}
 		},
 	});
 }
@@ -54,18 +59,19 @@ export async function getDisciplinesByTerms() {
 	});
 }
 
-export async function getTestsByDiscipline(disciplineId: number) {
+export async function getTestsByDiscipline(id: number) {
 	return await prisma.category.findMany({
 		select: {
 			name: true,
 			tests: {
 				where: {
-					disciplineId
+					id
 				},
 				select: {
 					id: true,
 					name: true,
 					pdfUrl: true,
+					views: true,
 					teachersDisciplines: {
 						select: {
 							teachers: {
@@ -79,4 +85,28 @@ export async function getTestsByDiscipline(disciplineId: number) {
 			},
 		}
 	})
+}
+
+export async function getAllDisciplines() {
+	return await prisma.discipline.findMany({
+		select: {
+			name: true,
+			id: true
+		}
+	})
+}
+
+export async function getDisciplinesByName(name: string) {
+	return await prisma.discipline.findUnique({
+		where: { name },
+	});
+}
+
+export async function getCategoriesList() {
+	return await prisma.category.findMany({
+		select: {
+			id: true,
+			name: true,
+		},
+	});
 }

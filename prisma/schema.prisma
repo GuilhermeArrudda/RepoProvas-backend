@@ -54,6 +54,7 @@ model test {
   pdfUrl              String
   categoryId          Int
   teacherDisciplineId Int
+		views															Int															@default(0)
   categories          category          @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   teachersDisciplines teacherDiscipline @relation(fields: [teacherDisciplineId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 		disciplines  discipline @relation(fields: [disciplineId], references: [id])

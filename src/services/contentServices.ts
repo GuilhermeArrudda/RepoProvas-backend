@@ -8,10 +8,14 @@ export async function contentInstructors() {
 		const categories = await contentRepository.getCategories(teacher.id);
         
 		const result = {
-   id: teacher.id,
-			instructorName: teacher.name,
+			id: teacher.id,
+			teacherName: teacher.name,
+			disciplines: teacher.teachersDisciplines.map(
+				(d) => d.disciplines.name
+			),
 			categories,
 		};
+
 		array.push(result);
 	}
 
@@ -20,22 +24,26 @@ export async function contentInstructors() {
 
 export async function contentTerms() {
 	const terms = await contentRepository.getDisciplinesByTerms();
-	const array = [];
-	
 
-	for (const term of terms) {
-		let tests = [];
-		for (const discipline of term.disciplines) {
-			tests.push({disciplineName: discipline.name, testsCategory: await contentRepository.getTestsByDiscipline(discipline.id)})
-		}
+	return terms;
+}
 
-		const result = {
-			termId: term.id,
-			termName: term.number,
-			termTests: tests,
-		}
-		array.push(result)
-	}
+export async function disciplinesList() {
+	const disciplines = await contentRepository.getAllDisciplines()
 
-	return array;
+	return disciplines
+}
+
+export async function disciplinesByName(name: string) {
+	return await contentRepository.getDisciplinesByName(name)
+}
+
+export async function categoriesList() {
+	return await contentRepository.getCategoriesList();
+}
+
+export async function disciplinesById(id: number) {
+	const discipline = contentRepository.getTestsByDiscipline(id);
+
+	return discipline;
 }
