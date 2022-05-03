@@ -1,5 +1,6 @@
 import { test } from '@prisma/client';
 import * as contentRepository from '../repositories/contentRepository.js';
+import * as errors from "../utils/errors.js"
 
 export interface Inputs {
 	name: string;
@@ -55,6 +56,9 @@ export async function categoriesList() {
 }
 
 export async function disciplinesById(id: number) {
+	if (isNaN(id)){
+		throw errors.invalidInput('Invalid input')
+	}
 	const discipline = contentRepository.getTestsByDiscipline(id);
 
 	return discipline;
@@ -65,6 +69,9 @@ export async function updateViews(id: number) {
 }
 
 export async function create(info: Inputs) {
+
+	if(!info) {
+	}
 	const { 
 		name,
 		pdfUrl,
