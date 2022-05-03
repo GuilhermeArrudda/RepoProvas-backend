@@ -1,4 +1,6 @@
+import { number } from 'joi';
 import { prisma } from '../database.js';
+import { CreateTest } from '../services/contentServices.js';
 
 export async function getInstructor() {
 	return await prisma.teacher.findMany({
@@ -119,5 +121,31 @@ export async function updateViews(id: number) {
 			id
 		},
 		data: { views: { increment: 1 } }
+	})
+}
+
+export async function getInstructorByName(name: string) {
+	return await prisma.teacher.findUnique({
+		where: { name }
+	})
+}
+
+export async function getCategoriesByName(name: string) {
+	return await prisma.category.findUnique({
+		where: { name }
+	})
+}
+
+export async function getTeacherDiscipline(teacherId: number, disciplineId: number){
+	return await prisma.teacherDiscipline.findFirst({
+		where: {
+			AND: [{ disciplineId }, { teacherId }]
+		}
+	})
+}
+
+export async function createTest(data: CreateTest) {
+	return await prisma.test.create({
+		data: data
 	})
 }

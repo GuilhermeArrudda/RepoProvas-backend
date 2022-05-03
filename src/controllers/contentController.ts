@@ -40,3 +40,11 @@ export async function updateViews(req: Request, res: Response) {
 	await contentServices.updateViews(parseInt(id))
 	res.sendStatus(200)
 }
+
+export async function createTest(req: Request, res: Response) {
+	const body: contentServices.Inputs = req.body
+
+	await contentServices.create(body)
+
+	res.sendStatus(201)
+}

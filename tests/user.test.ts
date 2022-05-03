@@ -1,7 +1,6 @@
 import app from '../src/app.js'
 import supertest from 'supertest'
 import { prisma } from '../src/database.js'
-import dotenv from 'dotenv'
 import { userSchemaFactory } from './factories/userSchemaFactory.js'
 import { tokenFactory } from './factories/tokenFactory.js'
 import { userFactory } from './factories/userFactory.js'

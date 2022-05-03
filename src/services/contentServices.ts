@@ -1,4 +1,16 @@
+import { test } from '@prisma/client';
 import * as contentRepository from '../repositories/contentRepository.js';
+
+export interface Inputs {
+	name: string;
+	pdfUrl: string;
+	category: string;
+	discipline: string;
+	teacher: string;
+}
+
+
+export type CreateTest = Omit<test, 'id' | 'views'>
 
 export async function contentInstructors() {
 	const teachers = await contentRepository.getInstructor();
@@ -50,4 +62,28 @@ export async function disciplinesById(id: number) {
 
 export async function updateViews(id: number) {
 	return await contentRepository.updateViews(id)
+}
+
+export async function create(info: Inputs) {
+	const { 
+		name,
+		pdfUrl,
+		category,
+		discipline,
+		teacher } = info
+
+		const categoryId = await contentRepository.getCategoriesByName(category)
+		const disciplineId = await contentRepository.getDisciplinesByName(discipline)
+		const teacherId = await contentRepository.getInstructorByName(teacher)
+		const teacherDisciplineId = await contentRepository.getTeacherDiscipline(teacherId.id, disciplineId.id)
+
+		const data = {
+			name,
+			pdfUrl,
+			categoryId: categoryId.id,
+			teacherDisciplineId: teacherDisciplineId.id,
+			disciplineId: disciplineId.id
+		}
+		
+		return await contentRepository.createTest(data)
 }
